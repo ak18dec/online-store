@@ -1,18 +1,73 @@
 package com.github.phillipkruger.onlinestore.productrules
        
 import com.github.phillipkruger.onlinestore.productrules.Product;
+import com.github.phillipkruger.onlinestore.productrules.Discount;
+import com.github.phillipkruger.onlinestore.productrules.Lotto;
 
-rule "Get discount"
+rule "Anvils discounts"
     dialect "mvel"
+    agenda-group "products"
     when
         $product: Product(this.id == "anvils")
+        $lotto: Lotto()
     then
-        System.out.println( $product + " should get some discount" );
-        modify($product) {
-            setPrice( new Double("30"))
-        }
-        //Visa visa = new Visa( $passport.getPassportNumber() );
-        //System.out.println("Issue " + visa);
-        //insertLogical( visa )
-    
+        System.out.println( $product.name + " should get some discount" );
+        Integer percentage = $lotto.percentage + 25;
+        
+        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, $lotto);
+        
+        System.out.println("discount " + discount.persentage + "%");
+        insertLogical( discount )
 end
+
+rule "Dehydrated boulders"
+    dialect "mvel"
+    agenda-group "products"
+    when
+        $product: Product(this.id == "dehydratedboulders")
+        $lotto: Lotto()
+    then
+        System.out.println( $product.name + " should get some discount" );
+        Integer percentage = $lotto.percentage + 30;
+        
+        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, $lotto);
+        
+        System.out.println("discount " + discount.persentage + "%");
+        insertLogical( discount )
+end
+
+rule "unicycle"
+    dialect "mvel"
+    agenda-group "products"
+    when
+        $product: Product(this.id == "unicycle")
+        $lotto: Lotto()
+    then
+        System.out.println( $product.name + " should get some discount" );
+        Integer percentage = $lotto.percentage + 5;
+        
+        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, $lotto);
+        
+        System.out.println("discount " + discount.persentage + "%");
+        insertLogical( discount )
+end
+
+/*
+rule "Black friday"
+    dialect "mvel"
+    agenda-group "promotions"
+    date-effective "18-Nov-2018"
+    date-expires "19-Nov-2018"
+    when
+        $product: Product()
+    then
+        System.out.println( $product + " black friday" );
+        Integer percentage = 60;
+        
+        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product);
+        
+        System.out.println("discount " + discount.persentage + "%");
+        insertLogical( discount )
+
+end
+*/

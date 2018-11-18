@@ -3,6 +3,8 @@ package com.github.phillipkruger.onlinestore.productrules;
 import com.github.phillipkruger.onlinestore.productrules.engine.ProductRuleEngine;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Collection;
+import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -27,12 +29,6 @@ public class ProductRulesApi {
     private ProductRuleEngine productRuleEngine;
     
     @GET
-    @ApiOperation(value = "Ping", notes = "Testing availability")
-    public String ping(){
-        return "pong";
-    }
-    
-    @GET
     @Path("/discount/{productName}")
     public Discount getDiscount(@PathParam("productName") String productName){
         // curl -X GET --header 'Accept: application/json' 'http://localhost:8080/store-front/api/catalog/product/dehydratedboulders'
@@ -41,8 +37,13 @@ public class ProductRulesApi {
             .request(MediaType.APPLICATION_JSON)
             .get(Product.class);
         
-        productRuleEngine.applyDiscount(product);
+        Optional<Discount> discount = productRuleEngine.getDiscount(product);
         
-        return new Discount(new Double(25),product);
+        if(discount.isPresent())return discount.get();
+        return getNoDiscount(product);
+    }
+    
+    private Discount getNoDiscount(Product product){
+        return new Discount("No Discount",new Double("0"), product, Lotto.getZeroLottoInstance());
     }
 }

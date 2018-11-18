@@ -52,7 +52,7 @@ public class ProductRepository {
         catalog.put(hispeedTonic.getId(),hispeedTonic);
         images.put(hispeedTonic.getImageName(), getLogo(hispeedTonic.getImageName()));
         
-        Product tornadoKit = buildProduct("tornado_kit","Home made tornados","tornado_kit","599.99");
+        Product tornadoKit = buildProduct("Tornado kit","Home made tornados","tornado_kit","599.99");
         catalog.put(tornadoKit.getId(),tornadoKit);
         images.put(tornadoKit.getImageName(), getLogo(tornadoKit.getImageName()));
         
@@ -63,7 +63,7 @@ public class ProductRepository {
     }
  
     private Product buildProduct(String name, String description,String imageName, String price){
-        String id = name.toLowerCase().replaceAll(" ", "");
+        String id = name.toLowerCase().replaceAll(" ", "").replaceAll("-", "").replaceAll("_", "");
         return Product.builder()
                         .id(id)
                         .name(name)
