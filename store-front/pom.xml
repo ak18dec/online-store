@@ -32,4 +32,67 @@
         <finalName>${project.artifactId}</finalName>
     </build>
     
+    <profiles>
+        <profile>
+            <id>wildfly</id>
+            <activation>
+                <property>
+                    <name>wildfly</name>
+                </property>
+            </activation>
+            
+            <properties>
+                <wildfly.version>14.0.1.Final</wildfly.version>
+                <wildfly.maven.version>2.0.0.Final</wildfly.maven.version>
+            </properties>
+            
+            <build>
+                <plugins>
+                    
+                    <plugin>
+                        <groupId>com.googlecode.maven-download-plugin</groupId>
+                        <artifactId>download-maven-plugin</artifactId>
+                        <version>1.4.1</version>
+                        <executions>
+                            <execution>
+                                <id>1</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <configuration>
+                                    <url>http://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</url>
+                                    <unpack>true</unpack>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <md5>61a1279e0549089dc95519fced661999</md5>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <version>${wildfly.maven.version}</version>
+                        <configuration>
+                            
+                            <server-config>standalone-full.xml</server-config> 
+                            <jboss-home>${project.build.directory}/wildfly-${wildfly.version}</jboss-home>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>2</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                </plugins>        
+            </build>
+        </profile>  
+    </profiles>
 </project>
