@@ -7,7 +7,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     
-    <name>online-store</name>
+    <name>Online Store</name>
     <url>https://github.com/phillip-kruger/online-store</url>
     <description>Example application to demonstrate an online store on JBoss EAP</description>
     
@@ -57,7 +57,7 @@
         
         <!-- JEE Platform -->        
         <jee.version>7.0</jee.version>
-        <lombok.version>1.16.18</lombok.version>
+        <lombok.version>1.18.4</lombok.version>
        
         <failOnMissingWebXml>false</failOnMissingWebXml>
         
@@ -85,4 +85,9 @@
         
     </dependencies>
     
+    <modules>
+        <module>product-rules</module>
+        <module>catalog-service</module>
+        <module>store-front</module>
+    </modules>
 </project>
