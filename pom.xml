@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>com.github.phillip-kruger</groupId>
-    <artifactId>notes-example</artifactId>
+    <artifactId>online-store</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     
-    <name>notes-example</name>
-    <url>https://github.com/phillip-kruger/notes-example</url>
-    <description>Example application to demonstrate Java EE 7</description>
+    <name>online-store</name>
+    <url>https://github.com/phillip-kruger/online-store</url>
+    <description>Example application to demonstrate an online store on JBoss EAP</description>
     
     <licenses>
         <license>
@@ -20,14 +20,14 @@
     </licenses>
     
     <scm>
-        <connection>scm:git:https://github.com/phillip-kruger/notes-example.git</connection>
-        <url>https://github.com/phillip-kruger/notes-example</url>
+        <connection>scm:git:https://github.com/phillip-kruger/online-store.git</connection>
+        <url>https://github.com/phillip-kruger/online-store</url>
     </scm>
 
     <distributionManagement>
         <site>
             <id>wiki</id>
-            <url>https://github.com/phillip-kruger/notes-example/wiki</url>
+            <url>https://github.com/phillip-kruger/online-store/wiki</url>
         </site>
         
         <snapshotRepository>
@@ -85,8 +85,4 @@
         
     </dependencies>
     
-    <modules>
-        <module>notes-application</module>
-        <module>notes-listener</module>
-    </modules>
 </project>
