@@ -23,6 +23,7 @@ public class ApplicationConfig extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> classes = new HashSet<>();
+        classes.add(StoreFrontApi.class);
         classes.add(ProductRulesApi.class);
         classes.add(CatalogApi.class);
         classes.add(ApieeService.class);
