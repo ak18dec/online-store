@@ -67,6 +67,19 @@
                                     <md5>61a1279e0549089dc95519fced661999</md5>
                                 </configuration>
                             </execution>
+<!--                            <execution>
+                                <id>2</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <configuration>
+                                    <url>https://download.jboss.org/drools/release/7.14.0.Final/kie-drools-wb-7.14.0.Final-wildfly14.war</url>
+                                    <unpack>false</unpack>
+                                    <outputDirectory>${project.build.directory}/wildfly-${wildfly.version}/standalone/deployments</outputDirectory>
+                                    <md5>230985ef25a68992c71bc1d0336fb15c</md5>
+                                </configuration>
+                            </execution>-->
                         </executions>
                     </plugin>
                     
@@ -76,6 +89,21 @@
                         <artifactId>wildfly-maven-plugin</artifactId>
                         <version>${wildfly.maven.version}</version>
                         <configuration>
+                            <add-user>
+                                <users>
+                                    <user>
+                                        <username>kieserver</username>
+                                        <password>kieserver</password>
+                                        <groups>
+                                            <group>admin</group>
+                                            <group>kie-server</group>
+                                            <group>rest-all</group>
+                                            <group>kiemgmt</group>
+                                        </groups>
+                                        <application-user>true</application-user>
+                                    </user>
+                                </users>
+                            </add-user>
                             
                             <server-config>standalone-full.xml</server-config> 
                             <jboss-home>${project.build.directory}/wildfly-${wildfly.version}</jboss-home>
