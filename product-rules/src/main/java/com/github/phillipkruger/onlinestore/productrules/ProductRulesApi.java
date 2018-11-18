@@ -1,8 +1,10 @@
 package com.github.phillipkruger.onlinestore.productrules;
 
+import com.github.phillipkruger.onlinestore.productrules.engine.ProductRuleEngine;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,6 +23,9 @@ import lombok.extern.java.Log;
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductRulesApi {
     
+    @Inject
+    private ProductRuleEngine productRuleEngine;
+    
     @GET
     @ApiOperation(value = "Ping", notes = "Testing availability")
     public String ping(){
@@ -35,6 +40,8 @@ public class ProductRulesApi {
         Product product = client.target("http://localhost:8080/store-front/api/catalog/product/" + productName)
             .request(MediaType.APPLICATION_JSON)
             .get(Product.class);
+        
+        productRuleEngine.applyDiscount(product);
         
         return new Discount(new Double(25),product);
     }

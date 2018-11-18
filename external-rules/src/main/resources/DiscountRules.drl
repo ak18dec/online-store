@@ -1,0 +1,18 @@
+package com.github.phillipkruger.onlinestore.productrules
+       
+import com.github.phillipkruger.onlinestore.productrules.Product;
+
+rule "Get discount"
+    dialect "mvel"
+    when
+        $product: Product(this.id == "anvils")
+    then
+        System.out.println( $product + " should get some discount" );
+        modify($product) {
+            setPrice( new Double("30"))
+        }
+        //Visa visa = new Visa( $passport.getPassportNumber() );
+        //System.out.println("Issue " + visa);
+        //insertLogical( visa )
+    
+end

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
 import javax.enterprise.context.Initialized;
@@ -25,7 +24,7 @@ public class ProductRepository {
     
     public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
         
-        Product anvils = buildProduct("anvils","Best wrought anvils","anvils","399.99");
+        Product anvils = buildProduct("Anvils","Best wrought anvils","anvils","399.99");
         catalog.put(anvils.getId(),anvils);
         images.put(anvils.getImageName(), getLogo(anvils.getImageName()));
         
