@@ -5,6 +5,7 @@
         <groupId>com.github.phillip-kruger</groupId>
         <artifactId>online-store</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
     
     <groupId>com.github.phillip-kruger.online-store</groupId>
@@ -23,13 +24,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>catalog-service</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        
-        <!-- Apiee -->
-        <dependency>
-            <groupId>com.github.phillip-kruger</groupId>
-            <artifactId>apiee-core</artifactId>
-            <version>1.0.8</version>
         </dependency>
         
     </dependencies>
