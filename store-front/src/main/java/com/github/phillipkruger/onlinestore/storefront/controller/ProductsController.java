@@ -1,12 +1,17 @@
 package com.github.phillipkruger.onlinestore.storefront.controller;
 
 
+import com.github.phillipkruger.onlinestore.catalogservice.CatalogApi;
+import com.github.phillipkruger.onlinestore.catalogservice.Product;
+import com.github.phillipkruger.onlinestore.productrules.Discount;
+import com.github.phillipkruger.onlinestore.productrules.ProductRulesApi;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,63 +27,30 @@ import lombok.extern.java.Log;
 @Named
 public class ProductsController implements Serializable {
     
-    @EJB
-    private NotesService notesService; 
+    @Inject
+    private CatalogApi catalogApi; 
+    @Inject ProductRulesApi productRulesApi;
     
     @Getter
-    private List<Note> notes = null;
-    
-    @Getter @Setter
-    private Note newNote = new Note();
+    private List<Product> products = null;
     
     @Getter
-    private final NoteStyle[] noteStyles = NoteStyle.values(); 
+    private Discount discount;
     
     @PostConstruct
     public void refresh(){
-        notes = notesService.getAllNotes();
-        this.newNote = new Note();
+        products = catalogApi.getProducts();
     }
     
-    public void addNote(){
-        try {
-            notesService.createNote(newNote);
-            refresh();
-        } catch (NoteExistAlreadyException ex) {
-            // TODO: To Screen
-            log.log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void updateNote(String title,String text){
-        try {
-            Note note = notesService.getNote(title);
-            note.setText(text);
-            notesService.updateNote(note);
-            refresh();
-        } catch (NoteNotFoundException ex) {
-            // TODO: To Screen
-            log.log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void deleteNote(String title){
-        try {
-            notesService.deleteNote(title);
-            refresh();
-        } catch (NoteNotFoundException ex) {
-            // TODO: To Screen
-            log.log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public String getCssClass(NoteStyle noteStyle){
-        if(noteStyle == NoteStyle.yellow) return "panel panel-warning";
-        if(noteStyle == NoteStyle.green) return "panel panel-success";
-        if(noteStyle == NoteStyle.white) return "panel panel-default";
-        if(noteStyle == NoteStyle.blue) return "panel panel-info";
-        if(noteStyle == NoteStyle.red) return "panel panel-danger";
+    public void buyProduct(String id){
+        Product product = catalogApi.getProduct(id);
+        this.discount = productRulesApi.getDiscount(id);
         
-        return "panel panel-primary";
+        log.severe("Buying " + product + ", Getting some discount " + discount);
     }
+    
+    public void clear(){
+        this.discount = null;
+    }
+    
 }

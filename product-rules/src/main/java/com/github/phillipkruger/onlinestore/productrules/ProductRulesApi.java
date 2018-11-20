@@ -2,8 +2,6 @@ package com.github.phillipkruger.onlinestore.productrules;
 
 import com.github.phillipkruger.onlinestore.productrules.engine.ProductRuleEngine;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import java.util.Collection;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

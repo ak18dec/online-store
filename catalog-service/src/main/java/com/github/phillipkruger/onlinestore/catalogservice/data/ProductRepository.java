@@ -75,7 +75,7 @@ public class ProductRepository {
     private byte[] getLogo(String name){
         try(InputStream logo = this.getClass().getClassLoader().getResourceAsStream("META-INF/resources/images/" + name + ".png")){
             BufferedImage bufferedImage = ImageIO.read(logo);
-            BufferedImage resizedImage = resizeImage(100, bufferedImage);
+            BufferedImage resizedImage = resizeImage(300, bufferedImage);
             try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
                 ImageIO.write(resizedImage, "png", baos);
                 return baos.toByteArray();

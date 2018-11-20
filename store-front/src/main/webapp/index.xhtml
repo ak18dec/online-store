@@ -12,127 +12,71 @@
 
         <ui:composition template="/templates/layout.xhtml">
             <ui:define name="content">
-                
-                <div class="jumbotron">
-                    <div class="container">
-                        <h1><i class="fa fa-sticky-note-o" aria-hidden="true"></i> #{i18n['heading']}</h1>
-                        <p>#{i18n['description']}</p>
-                        <p><a class="btn btn-primary btn-lg" href="https://github.com/phillip-kruger/notes-example" target="_blank" role="button"><i class="fa fa-github" aria-hidden="true"></i> #{i18n['learn_more']} </a></p>
-                    </div>
-                </div>
 
                 <div class="container">
                     
-                    <div class="row">
-                        <div class="col-md-4">
+                    <br/><br/><br/>
+                    
+                    <h:panelGroup layout="block" class="panel panel-success" rendered="#{productsController.discount !=null and productsController.discount.persentage>0}">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">#{productsController.discount.persentage} % Discount !</h3>
                             <h:form>
-                            <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">#{i18n['add_note']}</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="form-group">
-                                            <h:inputText id="newNoteTitle" 
-                                                         value="#{notesController.newNote.title}" 
-                                                         class="form-control" 
-                                                         title="#{i18n['title']}" 
-                                                         required="true" 
-                                                         requiredMessage="#{i18n['title_required']}" 
-                                                         pt:placeholder="#{i18n['title']}"></h:inputText>
-                                        </div>
-                                        <div class="form-group">
-                                            <h:inputTextarea id="newNoteText" 
-                                                        rows="3"                                                 
-                                                        value="#{notesController.newNote.text}" 
-                                                        class="form-control" 
-                                                        title="#{i18n['text']}" 
-                                                        required="true" 
-                                                        requiredMessage="#{i18n['text_required']}" 
-                                                        pt:placeholder="#{i18n['text']}"></h:inputTextarea>
-                                        </div>
-                                        <div class="form-group">
-                                            
-                                            <h:selectOneRadio value="#{notesController.newNote.style}" id="noteStyle">
-                                                <f:selectItems value="#{notesController.noteStyles}"
-                                                               var="noteStyle"
-                                                               itemValue="#{noteStyle}"
-                                                               itemLabel="#{i18n[noteStyle.name()]}" />
-                                            </h:selectOneRadio>
-                                            
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <h:inputText id="newNoteTags" 
-                                                         value="#{notesController.newNote.tags}" 
-                                                         class="form-control" 
-                                                         title="#{i18n['tags']}" 
-                                                         required="false" 
-                                                         pt:placeholder="#{i18n['tags']}"
-                                                         pt:data-role="tagsinput"
-                                                         converter="com.github.phillipkruger.notes.controller.TagsConverter">
-                                                
-                                            </h:inputText>
-                                            
-                                        </div>
-                                        
-                                        <h:commandLink action="#{notesController.addNote()}" value="#{i18n['save']}" class="pull-right btn btn-default btn-sm">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                        </h:commandLink> 
-                                    </div>
-                                    
-                                </div>
+                                <h:commandLink action="#{productsController.clear()}" pt:type="button" class="close" pt:data-dismiss="alert" pt:aria-label="Close">
+                                    <!--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>-->
+                                    <span aria-hidden="true">X</span>
+                                </h:commandLink> 
                             </h:form>
                         </div>
-                        <ui:repeat value="#{notesController.notes}" var="note">
+                        <div class="panel-body">
+                            Well done! You received #{productsController.discount.persentage} % discount on #{productsController.discount.product.name}.
+                        </div>
+                        
+                    </h:panelGroup>
+                    
+                    <h:panelGroup layout="block" class="panel panel-warning" rendered="#{productsController.discount !=null and productsController.discount.persentage==0}">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">No discount</h3>
+                            <h:form>
+                                <h:commandLink action="#{productsController.clear()}" pt:type="button" class="close" pt:data-dismiss="alert" pt:aria-label="Close">
+                                    <span aria-hidden="true">X</span>
+                                </h:commandLink> 
+                            </h:form>
+                        </div>
+                        <div class="panel-body">
+                            Too bad! There is no discount available on #{productsController.discount.product.name}
+                        </div>
+                    </h:panelGroup>
+                    
+                    <div class="row">
+                        <ui:repeat value="#{productsController.products}" var="product">
                             
-                            <div class="col-md-4">
-                                <h:form>
-                                    
-                                    <h:panelGroup layout="block" class="#{notesController.getCssClass(note.style)}">
-                                    
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">#{note.title}</h3>
-                                            
+                            <div class="col-md-3">
+                                
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">#{product.name}</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="text-center">
+                                            <img src="/store-front/api/catalog/images/#{product.imageName}.png" width="100%"></img>
                                         </div>
-                                        <div class="panel-body">
-                                            
-                                            <h:panelGroup layout="block" binding="#{noteViewMode}" id="noteViewMode">
-                                                #{note.text}
-                                                <br/>
-                                                
-                                                <ui:repeat value="#{note.tags}" var="tag">
-                                                    <span class="label label-info">#{tag}</span>    
-                                                </ui:repeat>
-                                                
-                                                <hr/>
-                                                <h:commandLink action="#{notesController.deleteNote(note.title)}" class="pull-right btn btn-link btn-sm">
-                                                    <i class="fa fa-trash-o" aria-hidden="true" style="color:red;"></i>
-                                                </h:commandLink>
-                                                <i class="fa fa-pencil" aria-hidden="true" onclick="showEdit(event)"></i>
-                                            </h:panelGroup>
-                                            
-                                            <h:panelGroup layout="block" binding="#{noteEditMode}" id="noteEditMode" style="display:none;">
-                                                <h:inputTextarea rows="3" id="editNoteText" value="#{note.text}" class="form-control editNote" title="#{i18n['text']}" required="true" requiredMessage="#{i18n['text_required']}" pt:placeholder="#{i18n['text']}"></h:inputTextarea>
-                                                <h:commandLink action="#{notesController.updateNote(note.title,note.text)}" class="pull-right btn btn-link btn-sm">
-                                                    <i class="fa fa-check-square" aria-hidden="true"></i> Update
-                                                </h:commandLink>
-                                            </h:panelGroup>
-                                            
-                                            <script>
-                                                function showEdit(event){
-                                                    event.preventDefault();
-                                                    document.getElementById("#{noteEditMode.clientId}").style.display = 'block';
-                                                    document.getElementById("#{noteViewMode.clientId}").style.display = 'none';
-                                                }
-                                                function hideEdit(event){
-                                                    event.preventDefault();
-                                                    document.getElementById("#{noteViewMode.clientId}").style.display = 'block';
-                                                    document.getElementById("#{noteEditMode.clientId}").style.display = 'node';
-                                                }
-                                            </script>
+                                    </div>
+                                    <div class="panel-footer">
+                                        #{product.description}
+                                    
+                                        
+                                        <div class="text-right">
+                                            <h3><span class="label label-primary">R #{product.price}</span></h3>
                                         </div>
-                                    </h:panelGroup>
-                                </h:form>    
+                                        
+                                        <h:form>
+                                            <h:commandLink action="#{productsController.buyProduct(product.id)}" class="btn btn-success btn-lg btn-block">
+                                                <span class="glyphicon glyphicon-shopping-cart"></span> #{i18n['buy']}
+                                            </h:commandLink> 
+                                        </h:form>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </ui:repeat>
                         
