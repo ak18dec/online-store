@@ -14,7 +14,7 @@ rule "Anvils discounts"
         System.out.println( $product.name + " should get some discount" );
         Integer percentage = $lotto.percentage + 25;
         
-        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, $lotto);
+        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, $lotto, drools.getRule().getAgendaGroup());
         
         System.out.println("discount " + discount.persentage + "%");
         insertLogical( discount )
@@ -30,7 +30,7 @@ rule "Dehydrated boulders"
         System.out.println( $product.name + " should get some discount" );
         Integer percentage = $lotto.percentage + 30;
         
-        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, $lotto);
+        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, $lotto, drools.getRule().getAgendaGroup());
         
         System.out.println("discount " + discount.persentage + "%");
         insertLogical( discount )
@@ -46,7 +46,7 @@ rule "unicycle"
         System.out.println( $product.name + " should get some discount" );
         Integer percentage = $lotto.percentage + 5;
         
-        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, $lotto);
+        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, $lotto, drools.getRule().getAgendaGroup());
         
         System.out.println("discount " + discount.persentage + "%");
         insertLogical( discount )
@@ -56,15 +56,15 @@ end
 rule "Black friday"
     dialect "mvel"
     agenda-group "promotions"
-    date-effective "18-Nov-2018"
-    date-expires "19-Nov-2018"
+    date-effective "20-Nov-2018"
+    date-expires "21-Nov-2018"
     when
         $product: Product()
     then
         System.out.println( $product + " black friday" );
         Integer percentage = 60;
         
-        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product);
+        Discount discount = new Discount(drools.getRule().getName(),percentage.doubleValue(),$product, drools.getRule().getAgendaGroup());
         
         System.out.println("discount " + discount.persentage + "%");
         insertLogical( discount )

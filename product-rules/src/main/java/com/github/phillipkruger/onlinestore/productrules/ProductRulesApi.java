@@ -42,6 +42,6 @@ public class ProductRulesApi {
     }
     
     private Discount getNoDiscount(Product product){
-        return new Discount("No Discount",new Double("0"), product, Lotto.getZeroLottoInstance());
+        return new Discount("No Discount",new Double("0"), product, Lotto.getZeroLottoInstance(), "no discount");
     }
 }
