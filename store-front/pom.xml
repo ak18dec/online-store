@@ -148,12 +148,9 @@
                             </add-user>
                             
                             
-                            <server-config>standalone-full.xml</server-config> 
+                            <server-config>standalone.xml</server-config> 
                             <jboss-home>${project.build.directory}/wildfly-${wildfly.version}</jboss-home>
-                            
-                            <startupTimeout>300</startupTimeout>
-                            
-                            
+
                         </configuration>
                         <executions>
                             <execution>

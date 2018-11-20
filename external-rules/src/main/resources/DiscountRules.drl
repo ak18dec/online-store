@@ -52,7 +52,7 @@ rule "unicycle"
         insertLogical( discount )
 end
 
-/*
+
 rule "Black friday"
     dialect "mvel"
     agenda-group "promotions"
@@ -70,4 +70,4 @@ rule "Black friday"
         insertLogical( discount )
 
 end
-*/
+

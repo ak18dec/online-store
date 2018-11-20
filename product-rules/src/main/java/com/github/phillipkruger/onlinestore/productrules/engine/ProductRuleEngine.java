@@ -4,7 +4,6 @@ import com.github.phillipkruger.onlinestore.productrules.Discount;
 import com.github.phillipkruger.onlinestore.productrules.Lotto;
 import com.github.phillipkruger.onlinestore.productrules.Product;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
